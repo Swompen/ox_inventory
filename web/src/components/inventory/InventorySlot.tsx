@@ -132,7 +132,7 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
             : undefined,
         opacity: isDragging ? 0.4 : 1.0,
         backgroundImage: `url(${item?.name ? getItemUrl(item as SlotWithItem) : 'none'}`,
-        border: isOver ? '1px dashed rgba(255,255,255,0.4)' : '',
+        border: isOver ? '2px solid #6366f1' : '',
       }}
     >
       {isSlotWithItem(item) && (
@@ -152,11 +152,11 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
           }}
         >
           <div
-            className={
-              inventoryType === 'player' && item.slot <= 5 ? 'item-hotslot-header-wrapper' : 'item-slot-header-wrapper'
-            }
+            className="item-slot-header-wrapper"
           >
-            {inventoryType === 'player' && item.slot <= 5 && <div className="inventory-slot-number">{item.slot}</div>}
+            {inventoryType === 'player' && item.slot <= 5 && (
+              <div className="inventory-slot-number">{item.slot}</div>
+            )}
             <div className="item-slot-info-wrapper">
               <p>
                 {item.weight > 0
@@ -174,7 +174,15 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
           </div>
           <div>
             {inventoryType !== 'shop' && item?.durability !== undefined && (
-              <WeightBar percent={item.durability} durability />
+              <div className="durability-bar-modern">
+                <div 
+                  className="durability-fill" 
+                  style={{ 
+                    width: `${item.durability}%`,
+                    background: item.durability > 50 ? '#10b981' : item.durability > 25 ? '#f59e0b' : '#ef4444'
+                  }} 
+                />
+              </div>
             )}
             {inventoryType === 'shop' && item?.price !== undefined && (
               <>
